@@ -5,6 +5,36 @@
     <title>Go Chat App</title>
 </head>
 <body>
-    <h1>Welcome to the Go Chat App</h1>
+    <h1>Welcome to the Go Chat App 123</h1>
+    <div id="messages">
+        test
+    </div>
+    <input type="text" id="nameInput" placeholder="Type your name...">
+    <input type="text" id="messageInput" placeholder="Type your message...">
+    <button id="sendButton" onclick="sendMessage()">Send</button>
 </body>
+<script>
+    const ws = new WebSocket("ws://localhost:3000/ws/messages");
+    ws.addEventListener("message", handleIncomeMessage);
+
+    function handleIncomeMessage(event) {
+        const receivedMessage = JSON.parse(event.data);
+        const messages = document.getElementById("messages");
+        const m = document.createElement("div");
+        m.appendChild(document.createTextNode("" + receivedMessage.sender + " says: " + receivedMessage.text));
+        messages.appendChild(m);
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const nameInput = document.getElementById("nameInput");
+
+        const message = {};
+        message.sender = nameInput.value
+        message.text = messageInput.value;
+
+        ws.send(JSON.stringify(message));
+        messageInput.value = "";
+    }
+</script>
 </html>
