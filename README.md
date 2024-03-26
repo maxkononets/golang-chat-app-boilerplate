@@ -1,3 +1,3 @@
-# Golang Chat App boilerplate
+# Golang Chat App implementation
 
-This boilerplate is needed for students who will be taking part of Golang workshop.
+This codebase implements chat application as the result of Golang workshop.
